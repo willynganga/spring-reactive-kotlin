@@ -1,0 +1,6 @@
+CREATE TABLE USER (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR2,
+    second_name VARCHAR2,
+    yob BIGINT
+);
