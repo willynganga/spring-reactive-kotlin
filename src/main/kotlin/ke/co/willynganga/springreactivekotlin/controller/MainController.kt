@@ -2,6 +2,8 @@ package ke.co.willynganga.springreactivekotlin.controller
 
 import ke.co.willynganga.springreactivekotlin.model.User
 import ke.co.willynganga.springreactivekotlin.service.UserService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -23,7 +25,14 @@ class MainController(
     fun findAllUsers() = userService.findAllUsers()
 
     @GetMapping("/user/{id}")
-    suspend fun findUserById(@PathVariable id: Long) = userService.findUserById(id)
+    suspend fun findUserById(@PathVariable id: Long): ResponseEntity<User> {
+        val user = userService.findUserById(id)
+        return if (user != null) {
+            ResponseEntity(user, HttpStatus.OK)
+        } else {
+            ResponseEntity(null, HttpStatus.NOT_FOUND)
+        }
+    }
 
     @PostMapping("/user/add")
     suspend fun saveUSer(@RequestBody user: User): User = userService.saveUser(user)

@@ -18,7 +18,7 @@ class UserService(
 
     fun findAllUsers(): Flow<User> = userRepository.findAll().asFlow()
 
-    suspend fun findUserById(id: Long): User? = userRepository.findById(id).awaitFirst()
+    suspend fun findUserById(id: Long): User? = userRepository.findById(id).awaitFirstOrNull()
 
     suspend fun saveUser(user: User): User = userRepository.save(user).awaitFirst()
 
